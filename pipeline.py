@@ -1,19 +1,10 @@
-from pyspark.sql import SparkSession
+import os
 
-spark = SparkSession.builder.appName("Ecommerce Pipeline").getOrCreate()
+print("🚀 Pipeline started...")
 
-print("Pipeline started...")
+# Step 1: Run Spark
+os.system("python spark/process_data.py")
 
-df = spark.read.csv("dataset_ecommerce/olist_orders_dataset.csv", header=True)
+print("✅ Spark step completed")
 
-print("Data Loaded")
-
-# Basic transformation
-status_count = df.groupBy("order_status").count()
-
-print("Order Status Summary:")
-status_count.show()
-
-spark.stop()
-
-print("Pipeline completed")
+print("🎯 Pipeline finished")

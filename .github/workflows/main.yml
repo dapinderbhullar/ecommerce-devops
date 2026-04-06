@@ -1,9 +1,8 @@
-name: DevOps Pipeline
+name: Run Pipeline
 
 on:
   push:
     branches:
-      - master
       - main
 
 jobs:
@@ -11,8 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Show files
-        run: ls -R
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.10
+
+    - name: Install dependencies
+      run: |
+        pip install pyspark pandas
+
+    - name: Run pipeline
+      run: python pipeline.py
